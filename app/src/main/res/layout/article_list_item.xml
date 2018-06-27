@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:minHeight="@dimen/list_item_height"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
+
+    <TextView
+        android:id="@+id/article_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="2"
+        android:textAllCaps="true"
+        android:textColor="@color/textColorArticleTitle"
+        android:textSize="16sp"
+        tools:text="QS world university rankings 2018: sports sciences and other really long text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/article_section"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/textColorArticleSectionName"
+            android:textSize="12sp"
+            tools:text="Higher Education Network and other really long text" />
+
+        <TextView
+            android:id="@+id/article_author"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColor="@color/textColorArticleSectionName"
+            android:textSize="12sp"
+            tools:text="Adam Collins and other really long text" />
+
+        <TextView
+            android:id="@+id/publication_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textColor="@color/textColorArticlePublicationDate"
+            android:textSize="12sp"
+            tools:text="Mar 6, 2010" />
+    </LinearLayout>
+</LinearLayout>

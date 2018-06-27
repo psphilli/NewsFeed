@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Text color for the details of the article in the list item -->
+    <color name="textColorArticleSectionName">#B4BAC0</color>
+
+    <!-- Text color for the primary location of the article in the list item -->
+    <color name="textColorArticleTitle">#2B3D4D</color>
+
+    <!-- Text color for the details of the article in the list item -->
+    <color name="textColorArticlePublicationDate">#B4BAC0</color>
 </resources>

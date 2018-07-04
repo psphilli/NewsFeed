@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="settings_sport_labels">
+        <item>@string/settings_sport_football_label</item>
+        <item>@string/settings_sport_baseball_label</item>
+        <item>@string/settings_sport_basketball_label</item>
+        <item>@string/settings_sport_soccer_label</item>
+        <item>@string/settings_sport_golf_label</item>
+        <item>@string/settings_sport_tennis_label</item>
+    </string-array>
+
+    <string-array name="settings_sport_values">
+        <item>@string/settings_sport_football_value</item>
+        <item>@string/settings_sport_baseball_value</item>
+        <item>@string/settings_sport_basketball_value</item>
+        <item>@string/settings_sport_soccer_value</item>
+        <item>@string/settings_sport_golf_value</item>
+        <item>@string/settings_sport_tennis_value</item>
+    </string-array>
+</resources>

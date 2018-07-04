@@ -1,6 +1,7 @@
 package com.example.android.newsfeed;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
 class ArticleAdapter extends ArrayAdapter<Article> {
 
-    private final String INPUT_PUBLISHED_DATE_FORMAT_STRING = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-    private final String OUTPUT_PUBLISHED_DATE_FORMAT_STRING = "LLL dd, yyyy";
+    private static final String INPUT_PUBLISHED_DATE_FORMAT_STRING = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    private static final String INPUT_PUBLISHED_DATE_TIME_ZONE = "GMT";
+    private static final String OUTPUT_PUBLISHED_DATE_FORMAT_STRING = "LLL dd, yyyy";
 
     /**
      * This is our own custom constructor (it doesn't mirror a superclass constructor).
@@ -40,8 +43,9 @@ class ArticleAdapter extends ArrayAdapter<Article> {
      * @param parent The parent ViewGroup that is used for inflation.
      * @return The View for the position in the AdapterView.
      */
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         // Check if the existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder;
@@ -66,7 +70,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         Article currentArticle = getItem(position);
 
         // Set the title TextView value
-        viewHolder.titleView.setText(currentArticle.getTitle());
+        viewHolder.titleView.setText(Objects.requireNonNull(currentArticle).getTitle());
 
         // Set the section name TextView value
         viewHolder.authorView.setText(currentArticle.getAuthor());
@@ -90,7 +94,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
      */
     private String formatPublicationDate(String strDate) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(INPUT_PUBLISHED_DATE_FORMAT_STRING, Locale.US);
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone(INPUT_PUBLISHED_DATE_TIME_ZONE));
         try {
             Date dateObject = simpleDateFormat.parse(strDate);
             simpleDateFormat = new SimpleDateFormat(OUTPUT_PUBLISHED_DATE_FORMAT_STRING, Locale.US);

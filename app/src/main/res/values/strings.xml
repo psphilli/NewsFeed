@@ -1,7 +1,58 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">News Feed</string>
 
     <string name="no_articles_found">No news/articles available found, please come back later and try again!</string>
     <string name="no_internet_connection">No internet connection</string>
 
+    <!-- Settings Menu -->
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">News Feed Settings</string>
+
+
+    <!-- API key default option [CHAR LIMIT=30] -->
+    <string name="settings_api_key_test_value" translatable="false">test</string>
+
+    <!-- Strings for API key preference [CHAR LIMIT=30] -->
+    <string name="settings_api_key_label">API Key</string>
+    <string name="settings_api_key_key" translatable="false">api_key</string>
+    <string name="settings_api_key_default" translatable="false">@string/settings_api_key_test_value</string>
+
+
+    <!-- Number results default option [CHAR LIMIT=30] -->
+    <string name="settings_number_results_thirty_value" translatable="false">30</string>
+
+    <!-- Strings for number of results preference [CHAR LIMIT=30] -->
+    <string name="settings_number_results_label">Number of Results</string>
+    <string name="settings_number_results_key" translatable="false">number_results</string>
+    <string name="settings_number_results_default" translatable="false">@string/settings_number_results_thirty_value</string>
+    <string name="settings_number_results_range_error_message" tools:ignore="PluralsCandidate">The number of results preference must be set to a value between <xliff:g id="minimum" example="1">%d</xliff:g> and <xliff:g id="maximum" example="1000">%d</xliff:g>.</string>
+
+    <!-- Strings sport preference [CHAR LIMIT=30] -->
+    <string name="settings_sport_label">Sport</string>
+    <string name="settings_sport_key" translatable="false">sport</string>
+    <string name="settings_sport_default" translatable="false">@string/settings_sport_football_value</string>
+
+    <!-- Label for football sport option [CHAR LIMIT=20] -->
+    <string name="settings_sport_football_label">Football</string>
+    <string name="settings_sport_football_value" translatable="false">football</string>
+
+    <!-- Label for baseball sport option [CHAR LIMIT=20] -->
+    <string name="settings_sport_baseball_label">Baseball</string>
+    <string name="settings_sport_baseball_value" translatable="false">baseball</string>
+
+    <!-- Label for basketball sport option [CHAR LIMIT=20] -->
+    <string name="settings_sport_basketball_label">Basketball</string>
+    <string name="settings_sport_basketball_value" translatable="false">basketball</string>
+
+    <!-- Label for soccer sport option [CHAR LIMIT=20] -->
+    <string name="settings_sport_soccer_label">Soccer</string>
+    <string name="settings_sport_soccer_value" translatable="false">soccer</string>
+
+    <!-- Label for baseball sport option [CHAR LIMIT=20] -->
+    <string name="settings_sport_golf_label">Golf</string>
+    <string name="settings_sport_golf_value" translatable="false">golf</string>
+
+    <!-- Label for baseball sport option [CHAR LIMIT=20] -->
+    <string name="settings_sport_tennis_label">Tennis</string>
+    <string name="settings_sport_tennis_value" translatable="false">tennis</string>
 </resources>

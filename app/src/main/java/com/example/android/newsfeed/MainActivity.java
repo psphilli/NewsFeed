@@ -3,12 +3,16 @@ package com.example.android.newsfeed;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,11 +20,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>>{
 
     private static final String LOG_TAG = MainActivity.class.getName();
-
     private static final int ARTICLE_LOADER_ID = 1;
 
     /** URL for news article data from the Guardian WebAPI */
@@ -46,16 +50,34 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
         Log.e(LOG_TAG, "onCreateLoader");
 
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //NOTE TO REVIEWER: I know this is probably something we wouldn't want to do in a "play store"
+        //app, but has been added as a convenience to not having to deal with remove my api key before
+        // publishing the source.  Suggestions?
+        String apiKey = sharedPrefs.getString(
+                getString(R.string.settings_api_key_key),
+                getString(R.string.settings_api_key_default));
+
+        String numberResults = sharedPrefs.getString(
+                getString(R.string.settings_number_results_key),
+                getString(R.string.settings_number_results_default));
+
+        String sport = sharedPrefs.getString(
+                getString(R.string.settings_sport_key),
+                getString(R.string.settings_sport_default));
+
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendQueryParameter("q", "us/sport");
-        uriBuilder.appendQueryParameter("section", "sport");
+        uriBuilder.appendQueryParameter("q", sport);
+        uriBuilder.appendQueryParameter("production-office", "us");
         uriBuilder.appendQueryParameter("show-tags", "contributor");
-        uriBuilder.appendQueryParameter("order-by", "newest");
-        uriBuilder.appendQueryParameter("page-size", "30");
-        uriBuilder.appendQueryParameter("api-key", "test");
+        uriBuilder.appendQueryParameter("order-by", "relevance");
+        uriBuilder.appendQueryParameter("page-size", numberResults);
+        uriBuilder.appendQueryParameter("api-key", apiKey);
 
+        //noinspection unchecked
         return new ArticleLoader(this, uriBuilder.toString());
     }
 
@@ -119,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Find a reference to the {@link ListView} in the layout
         ListView articleListView = findViewById(R.id.list);
 
@@ -137,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 getSystemService(CONNECTIVITY_SERVICE);
 
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo networkInfo = Objects.requireNonNull(connectivityManager).getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
 
             //NO Internet connection
@@ -171,17 +192,41 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current article that was clicked on
-                Article currentArticle = mAdapter.getItem(position);
+            Article currentArticle = mAdapter.getItem(position);
 
-                // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri articleUri = Uri.parse(currentArticle.getUrl());
+            // Convert the String URL into a URI object (to pass into the Intent constructor)
+            Uri articleUri = Uri.parse(Objects.requireNonNull(currentArticle).getUrl());
 
-                // Create a new intent to view the article URI
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, articleUri);
+            // Create a new intent to view the article URI
+            Intent websiteIntent = new Intent(Intent.ACTION_VIEW, articleUri);
 
-                // Send the intent to launch a new activity
-                startActivity(websiteIntent);
+            // Send the intent to launch a new activity
+            startActivity(websiteIntent);
             }
         });
     }
+
+    //region Custom Menu
+
+    @Override
+    // This method initialize the contents of the Activity's options menu.
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the Options Menu we specified in XML
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    // This method is called whenever an item in the options menu is selected.
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //endregion
 }
